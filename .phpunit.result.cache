@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"PermissionsTest::testStudentCanWishlist":0.004,"PermissionsTest::testStudentCannotManagePilots":0,"TestControllerTest::testPingOutputsPong":0.001,"PermissionsTest::testStudentWishlistPermissions":0.004,"PermissionsTest::testAdminHasPilotManagement":0,"PermissionsTest::testPilotCannotCreatePilots":0}}
