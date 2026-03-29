@@ -8627,4 +8627,26 @@ textarea{ min-height: 120px; resize: vertical; }
   .login-card-head h2{
     font-size:28px;
   }
+
+  .login-top-home{
+  margin-bottom:18px;
+}
+
+.login-home-link{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  background: rgba(37,99,235,.08);
+  border:1px solid rgba(37,99,235,.15);
+  color:#2563eb;
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  transition: all .25s ease;
+}
+
+.login-home-link:hover{
+  background: rgba(37,99,235,.15);
+  transform: translateY(-1px);
+}
 }

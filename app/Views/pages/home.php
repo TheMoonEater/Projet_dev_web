@@ -14,7 +14,7 @@ $role = Auth::role();
 
   <div class="hero-content">
     <div class="hero-left">
-      <span class="hero-badge">Plateforme intelligente de gestion des stages</span>
+      <span class="hero-badge">Plateforme de gestion des stages</span>
 
       <h1 class="hero-title">
         Trouve, gère et pilote

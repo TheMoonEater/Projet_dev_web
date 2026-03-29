@@ -10,9 +10,15 @@ $oldEmail = (string)($oldEmail ?? '');
 
 <div class="login-page">
   <div class="login-page-bg"></div>
+  
 
   <div class="login-shell">
     <div class="login-left">
+      <div class="login-actions-bottom">
+  <a href="<?= Http::url('/') ?>" class="btn login-home-btn">
+     Aller à l’accueil
+  </a>
+</div>
       <div class="login-brand">
         <span class="login-brand-icon">🎓</span>
         <div>
