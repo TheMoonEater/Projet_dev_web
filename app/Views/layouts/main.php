@@ -66,61 +66,104 @@ $isAuthPage = in_array($currentPath, ['/login'], true);
 
             <a class="nb-link <?= (str_contains($currentPath, '/offers') && !str_contains($currentPath, '/offers/stats')) ? 'nb-link-active' : '' ?>" href="<?= Http::url('/offers') ?>">Offres</a>
 
-            <?php if ($user): ?>
+<?php if ($user): ?>
 
-                <?php if (Permissions::can($role, 'SFx21')): ?>
-                    <a class="nb-link <?= nb_active('/my-applications', $currentPath) ?>" href="<?= Http::url('/my-applications') ?>">Mes candidatures</a>
-                <?php endif; ?>
+    <?php if ($role === 'STUDENT'): ?>
 
-                <?php if (Permissions::can($role, 'SFx22')): ?>
-                    <a class="nb-link <?= nb_active('/pilot/applications', $currentPath) ?>" href="<?= Http::url('/pilot/applications') ?>">Candidatures élèves</a>
-                <?php endif; ?>
+        <?php if (Permissions::can($role, 'SFx21')): ?>
+            <a class="nb-link <?= nb_active('/my-applications', $currentPath) ?>" href="<?= Http::url('/my-applications') ?>">Mes candidatures</a>
+        <?php endif; ?>
 
-                <?php if (Permissions::can($role, 'SFx23')): ?>
-                    <a class="nb-link <?= nb_active('/wishlist', $currentPath) ?>" href="<?= Http::url('/wishlist') ?>">Wish-list</a>
-                <?php endif; ?>
+        <?php if (Permissions::can($role, 'SFx23')): ?>
+            <a class="nb-link <?= nb_active('/wishlist', $currentPath) ?>" href="<?= Http::url('/wishlist') ?>">Wish-list</a>
+        <?php endif; ?>
 
-                <?php if (Permissions::can($role, 'SFx11')): ?>
-                    <a class="nb-link <?= nb_active('/offers/stats', $currentPath) ?>" href="<?= Http::url('/offers/stats') ?>">Statistiques</a>
-                <?php endif; ?>
+        <?php if (Permissions::can($role, 'SFx11')): ?>
+    <a class="nb-link <?= nb_active('/offers/stats', $currentPath) ?>" href="<?= Http::url('/offers/stats') ?>">
+        Statistiques
+    </a>
+<?php endif; ?>
 
-                <?php if (Permissions::can($role, 'SFx12')): ?>
-                    <a class="nb-link <?= nb_active('/pilots', $currentPath) ?>" href="<?= Http::url('/pilots') ?>">Pilotes</a>
-                <?php endif; ?>
+        <a class="nb-link <?= nb_active('/profile', $currentPath) ?>" href="<?= Http::url('/profile') ?>">Profil</a>
 
-                <?php if (Permissions::can($role, 'SFx16')): ?>
-                    <a class="nb-link <?= nb_active('/students', $currentPath) ?>" href="<?= Http::url('/students') ?>">Étudiants</a>
-                <?php endif; ?>
+    <?php endif; ?>
 
-                <?php if (in_array($role, ['ADMIN', 'PILOT'], true)): ?>
-                    <a class="nb-link <?= nb_active('/pilot-students', $currentPath) ?>" href="<?= Http::url('/pilot-students') ?>">Affectations</a>
-                <?php endif; ?>
+<?php if ($role === 'PILOT'): ?>
+    <details class="nb-dropdown">
+        <summary class="nb-dropdown-toggle <?= (str_contains($currentPath, '/pilot/applications') || str_contains($currentPath, '/students') || str_contains($currentPath, '/pilot-students')) ? 'nb-link-active' : '' ?>">
+            <span>Pilotage</span>
+            <span class="nb-caret">▾</span>
+        </summary>
 
-                <a class="nb-link <?= nb_active('/profile', $currentPath) ?>" href="<?= Http::url('/profile') ?>">Profil</a>
-
-                <div class="nb-userzone">
-                    <div class="nb-usercard">
-                        <div class="nb-avatar">
-                            <?= strtoupper(substr((string)$user['email'], 0, 1)) ?>
-                        </div>
-
-                        <div class="nb-usertext">
-                            <span class="nb-email"><?= htmlspecialchars((string)$user['email']) ?></span>
-                            <span class="nb-role"><?= htmlspecialchars((string)$role) ?></span>
-                        </div>
-                    </div>
-
-                    <form method="post" action="<?= Http::url('/logout') ?>" class="nb-logout-form">
-                        <input type="hidden" name="_csrf" value="<?= Csrf::token() ?>">
-                        <button type="submit" class="nb-logout-btn">Déconnexion</button>
-                    </form>
-                </div>
-
-            <?php else: ?>
-
-                <a class="nb-link <?= nb_active('/login', $currentPath) ?>" href="<?= Http::url('/login') ?>">Connexion</a>
-
+        <div class="nb-dropdown-menu">
+            <?php if (Permissions::can($role, 'SFx22')): ?>
+                <a class="nb-dropdown-link <?= nb_active('/pilot/applications', $currentPath) ?>" href="<?= Http::url('/pilot/applications') ?>">
+                    Candidatures élèves
+                </a>
             <?php endif; ?>
+
+            <?php if (Permissions::can($role, 'SFx16')): ?>
+                <a class="nb-dropdown-link <?= nb_active('/students', $currentPath) ?>" href="<?= Http::url('/students') ?>">
+                    Étudiants
+                </a>
+            <?php endif; ?>
+
+            <a class="nb-dropdown-link <?= nb_active('/pilot-students', $currentPath) ?>" href="<?= Http::url('/pilot-students') ?>">
+                Affectations
+            </a>
+        </div>
+    </details>
+
+    <?php if (Permissions::can($role, 'SFx11')): ?>
+        <a class="nb-link <?= nb_active('/offers/stats', $currentPath) ?>" href="<?= Http::url('/offers/stats') ?>">Statistiques</a>
+    <?php endif; ?>
+
+    <a class="nb-link <?= nb_active('/profile', $currentPath) ?>" href="<?= Http::url('/profile') ?>">Profil</a>
+<?php endif; ?>
+
+    <?php if ($role === 'ADMIN'): ?>
+
+        <?php if (Permissions::can($role, 'SFx11')): ?>
+            <a class="nb-link <?= nb_active('/offers/stats', $currentPath) ?>" href="<?= Http::url('/offers/stats') ?>">Statistiques</a>
+        <?php endif; ?>
+
+        <?php if (Permissions::can($role, 'SFx12')): ?>
+            <a class="nb-link <?= nb_active('/pilots', $currentPath) ?>" href="<?= Http::url('/pilots') ?>">Pilotes</a>
+        <?php endif; ?>
+
+        <?php if (Permissions::can($role, 'SFx16')): ?>
+            <a class="nb-link <?= nb_active('/students', $currentPath) ?>" href="<?= Http::url('/students') ?>">Étudiants</a>
+        <?php endif; ?>
+
+        <a class="nb-link <?= nb_active('/pilot-students', $currentPath) ?>" href="<?= Http::url('/pilot-students') ?>">Affectations</a>
+
+        <a class="nb-link <?= nb_active('/profile', $currentPath) ?>" href="<?= Http::url('/profile') ?>">Profil</a>
+
+    <?php endif; ?>
+
+    <div class="nb-userzone">
+        <div class="nb-usercard">
+            <div class="nb-avatar">
+                <?= strtoupper(substr((string)$user['email'], 0, 1)) ?>
+            </div>
+
+            <div class="nb-usertext">
+                <span class="nb-email"><?= htmlspecialchars((string)$user['email']) ?></span>
+                <span class="nb-role"><?= htmlspecialchars((string)$role) ?></span>
+            </div>
+        </div>
+
+        <form method="post" action="<?= Http::url('/logout') ?>" class="nb-logout-form">
+            <input type="hidden" name="_csrf" value="<?= Csrf::token() ?>">
+            <button type="submit" class="nb-logout-btn">Déconnexion</button>
+        </form>
+    </div>
+
+<?php else: ?>
+
+    <a class="nb-link <?= nb_active('/login', $currentPath) ?>" href="<?= Http::url('/login') ?>">Connexion</a>
+
+<?php endif; ?>
         </nav>
     </div>
 </header>
